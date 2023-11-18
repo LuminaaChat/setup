@@ -1,0 +1,9 @@
+---
+- name: "Playbook Entrypoint"
+  hosts: ubuntu_server
+  become: true
+  gather_facts: false
+  vars_files:
+    - vars/all.yml
+  roles:
+    - nginx
