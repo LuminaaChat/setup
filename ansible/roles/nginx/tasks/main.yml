@@ -1,17 +1,30 @@
 ---
 - name: Install nginx
   ansible.builtin.apt:
-    name: nginx
+    pkg:
+      - nginx
+      - git
+      - curl
     update_cache: "yes"
+- name: Install packages and build app
+  ansible.builtin.command:
+    cmd: curl -sL https://deb.nodesource.com/setup_20.x -o /tmp/nodesource_setup.sh
+- name: Install packages and build app
+  ansible.builtin.command: /bin/sh /tmp/nodesource_setup.sh
+- name: Install nginx apt install nodejs
+  ansible.builtin.apt:
+    pkg:
+      - nodejs
 - name: Copy nginx config file
   ansible.builtin.copy:
     src: files/nginx.conf
-    dest: /etc/nginx/sites-available/default
+    dest: /etc/nginx/nginx.conf
     mode: "0644"
-- name: Enable configuration
-  ansible.builtin.file:
-    dest: /etc/nginx/sites-enabled/default
-    src: /etc/nginx/sites-available/default
+- name: Copy nginx config file
+  ansible.builtin.copy:
+    src: files/security-headers.conf
+    dest: /etc/nginx/security-headers.conf
+    mode: "0644"
 - name: Copy index.html
   ansible.builtin.template:
     src: templates/index.html.j2

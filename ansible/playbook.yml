@@ -1,6 +1,6 @@
 ---
-- hosts: ubuntu_server
-  name: "Playbook Entrypoint"
+- name: "Playbook Entrypoint"
+  hosts: ubuntu_server
   become: true
   gather_facts: false
   vars_files:
