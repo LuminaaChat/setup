@@ -1,0 +1,60 @@
+---
+- name: Search for openjdk-17
+  ansible.builtin.command:
+    cmd: apt-cache search openjdk | grep openjdk-17
+  # when: lookup('ansible.builtin.env', 'JAVA_HOME')| length == 0
+- name: Install openjdk-17
+  ansible.builtin.apt:
+    name: openjdk-17-jdk-headless
+  # when: lookup('ansible.builtin.env', 'JAVA_HOME') | length == 0
+- name: Create keycloak directory if it does not exist
+  ansible.builtin.file:
+    path: /opt/keycloak
+    state: directory
+- name: Check if Keycloak is downloaded
+  ansible.builtin.stat:
+    path: /opt/keycloak/bin/kc.sh
+  register: stat_result
+- name: "Download Keycloak"
+  ansible.builtin.unarchive:
+    src: https://github.com/keycloak/keycloak/releases/download/22.0.5/keycloak-22.0.5.tar.gz
+    dest: /opt/keycloak
+    remote_src: true
+  when: not stat_result.stat.exists
+- name: Move keycloak folder content upwards
+  ansible.builtin.copy:
+    src: /opt/keycloak/keycloak-22.0.5/
+    dest: /opt/keycloak/
+    remote_src: true
+- name: Ensure group "keycloak" exists
+  group:
+    name: keycloak
+    state: present
+- name: Add the user 'keycloak'
+  ansible.builtin.user:
+    name: keycloak
+    comment: Keycloak service rile
+    group: keycloak
+    system: true
+    home: /opt/keycloak
+    shell: /sbin/nologin
+- name: Set the ownership of the /opt/keycloak directory to keycloak
+  file:
+    path: /opt/keycloak
+    owner: keycloak
+    group: keycloak
+    recurse: true
+- name: Copy keycloak service to target location
+  ansible.builtin.copy:
+    src: files/keycloak.service
+    dest: /etc/systemd/system/keycloak.service
+- name: Change mod of keycloak executables
+  ansible.builtin.file:
+    path: /opt/keycloak/bin/
+    mode: o+x
+- name: Start Keycloak
+  ansible.builtin.command:
+    cmd: systemctl start keycloak
+- name: Enable Keycloak
+  ansible.builtin.command:
+    cmd: systemctl enable keycloak

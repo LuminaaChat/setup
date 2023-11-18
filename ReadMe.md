@@ -6,9 +6,16 @@
 
 # Ausführung
 TODO
-  
+## Keycloak
+* Admin Username und Passwort verändern!
+* Erreichbar unter: http://localhost:8081/admin/master/console/
 
 
+# ToDos
+
+## Keycloak
+* Eigenen User mit Rolle erstellen im Client
+* Default Settings konfigurieren und einlesen
 
 ## Resources
 <a id="1">[1]</a> 

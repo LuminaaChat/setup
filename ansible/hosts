@@ -1,2 +1,4 @@
 [mongo_standalone]
 135.181.250.218 ansible_user=root
+[ubuntu_server]
+95.217.182.16 ansible_user=root
