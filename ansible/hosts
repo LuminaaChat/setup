@@ -1,0 +1,2 @@
+[mongo_standalone]
+135.181.250.218 ansible_user=root

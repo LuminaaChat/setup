@@ -1,0 +1,34 @@
+---
+- name: Install packages and build app
+  ansible.builtin.command:
+    cmd: curl -sL https://deb.nodesource.com/setup_20.x -o /tmp/nodesource_setup.sh
+- name: Install packages and build app
+  ansible.builtin.command: /bin/sh /tmp/nodesource_setup.sh
+- name: Install nginx apt install nodejs
+  ansible.builtin.apt:
+    pkg:
+      - nodejs
+- name: Install global npm packages
+  community.general.npm:
+    name: "@nestjs/cli"
+    global: true
+- name: Clone
+  ansible.builtin.git:
+    repo: https://github.com/OpenWudChat/backend.git
+    dest: /srv/backend
+    version: dev
+- name: Npm Install
+  ansible.builtin.command: npm install
+  args:
+    chdir: /srv/backend
+- name: Copy nginx config file
+  ansible.builtin.copy:
+    src: files/nodeserver.service
+    dest: /lib/systemd/system/nodeserver.service
+    mode: "0644"
+- name: Run command if /path/to/database does not exist (without 'args')
+  ansible.builtin.command: systemctl daemon-reload
+- name: Restart nodeserver
+  ansible.builtin.service:
+    name: nodeserver
+    state: restarted

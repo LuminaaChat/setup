@@ -1,0 +1,18 @@
+[Unit]
+Description=NestJs Server
+
+[Service]
+Environment=NODE_PORT=3000
+Type=simple
+User=root
+ExecStart=/usr/bin/npm run start
+WorkingDirectory=/srv/backend
+Restart=always
+RestartSec=4
+#StandardOutput=syslog
+#StandardError=syslog
+#SyslogIdentifier=nestjs-node
+Environment=NODE_ENV=production
+
+[Install]
+WantedBy=multi-user.target
