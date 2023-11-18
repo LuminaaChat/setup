@@ -1,0 +1,26 @@
+- name: Search for openjdk-17
+  ansible.builtin.command:
+    cmd: apt-cache search openjdk | grep openjdk-17
+  when: lookup('ansible.builtin.env', 'JAVA_HOME')| length == 0
+- name: Install openjdk-17
+  ansible.builtin.apt:
+    name: openjdk-17-jdk
+  when: lookup('ansible.builtin.env', 'JAVA_HOME') | length == 0
+- name: Create a directory if it does not exist
+  ansible.builtin.file:
+    path: /etc/keycloak
+    state: directory
+- name: Check if Keycloak is downloaded
+  ansible.builtin.stat:
+    path: /etc/keycloak/keycloak-22.0.5/bin/kc.sh
+  register: stat_result
+- name: "Download Keycloak"
+  ansible.builtin.unarchive:
+    src: https://github.com/keycloak/keycloak/releases/download/22.0.5/keycloak-22.0.5.tar.gz
+    dest: /etc/keycloak
+    remote_src: true
+  when: not stat_result.stat.exists
+- name: "Start Keycloak"
+  ansible.builtin.shell:
+    chdir: /etc/keycloak/keycloak-22.0.5/bin
+    cmd: ./kc.sh start-dev &

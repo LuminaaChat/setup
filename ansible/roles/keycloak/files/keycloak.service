@@ -1,0 +1,11 @@
+[Unit]
+Description=Keycloak Service
+After=network.target
+
+[Service]
+User=test
+ExecStart=/etc/keycloak/keycloak-22.0.5/bin/kc.sh
+WorkingDirectory=/etc/keycloak/keycloak-22.0.5
+
+[Install]
+WantedBy=multi-user.target

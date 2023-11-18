@@ -7,6 +7,7 @@
   roles:
     - mongodb
     - backend
+    - keycloak
   tasks:
     - name: Allow all access to tcp port 80
       community.general.ufw:
