@@ -1,11 +1,17 @@
 [Unit]
 Description=Keycloak Service
-After=network.target
+After=syslog.target network.target
+Before=httpd.service
+StartLimitIntervalSec=0
 
 [Service]
-User=test
-ExecStart=/etc/keycloak/keycloak-22.0.5/bin/kc.sh
-WorkingDirectory=/etc/keycloak/keycloak-22.0.5
+Environment="KEYCLOAK_ADMIN=admin"
+Environment="KEYCLOAK_ADMIN_PASSWORD=password"
+User=keycloak
+ExecStart=/opt/keycloak/bin/kc.sh start-dev
+WorkingDirectory=/opt/keycloak/
+Restart=always
+RestartSec=1
 
 [Install]
 WantedBy=multi-user.target

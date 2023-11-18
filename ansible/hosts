@@ -1,4 +1,4 @@
 [mongo_standalone]
 135.181.250.218 ansible_user=root
 [ubuntu_server]
-127.0.0.1	ansible_port=2222 ansible_connection=ssh	ansible_user=test	ansible_password=test
+95.217.182.16 ansible_user=root
