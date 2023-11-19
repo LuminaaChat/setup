@@ -56,9 +56,6 @@
   ansible.builtin.file:
     path: /opt/keycloak/bin/
     mode: o+x
-- name: Reload Demon
-  ansible.builtin.command:
-    cmd: systemctl daemon-reload
 - name: Enable Keycloak
   ansible.builtin.command:
     cmd: systemctl enable keycloak
