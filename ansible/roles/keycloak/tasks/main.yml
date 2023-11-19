@@ -1,12 +1,16 @@
 ---
+- name: Check if openjdk is installed
+  ansible.builtin.command: java --version
+  register: java_version
+  ignore_errors: true
 - name: Search for openjdk-17
-  ansible.builtin.command:
+  ansible.builtin.shell:
     cmd: apt-cache search openjdk | grep openjdk-17
-  # when: lookup('ansible.builtin.env', 'JAVA_HOME')| length == 0
+  when: java_version is failed
 - name: Install openjdk-17
   ansible.builtin.apt:
     name: openjdk-17-jdk-headless
-  # when: lookup('ansible.builtin.env', 'JAVA_HOME') | length == 0
+  when: java_version is failed
 - name: Create keycloak directory if it does not exist
   ansible.builtin.file:
     path: /opt/keycloak
@@ -26,6 +30,7 @@
     src: /opt/keycloak/keycloak-22.0.5/
     dest: /opt/keycloak/
     remote_src: true
+  when: not stat_result.stat.exists
 - name: Ensure group "keycloak" exists
   group:
     name: keycloak
