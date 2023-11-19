@@ -8,10 +8,11 @@ StartLimitIntervalSec=0
 Environment="KEYCLOAK_ADMIN=admin"
 Environment="KEYCLOAK_ADMIN_PASSWORD=password"
 User=keycloak
+Group=keycloak
 ExecStart=/opt/keycloak/bin/kc.sh start-dev
 WorkingDirectory=/opt/keycloak/
 Restart=always
-RestartSec=1
+RestartSec=10
 
 [Install]
 WantedBy=multi-user.target

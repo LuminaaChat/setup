@@ -33,7 +33,7 @@
 - name: Add the user 'keycloak'
   ansible.builtin.user:
     name: keycloak
-    comment: Keycloak service rile
+    comment: Keycloak service file
     group: keycloak
     system: true
     home: /opt/keycloak
@@ -44,6 +44,10 @@
     owner: keycloak
     group: keycloak
     recurse: true
+- name: Copy keycloak config to target location
+  ansible.builtin.copy:
+    src: files/keycloak.conf
+    dest: /opt/keycloak/conf/keycloak.conf
 - name: Copy keycloak service to target location
   ansible.builtin.copy:
     src: files/keycloak.service
@@ -52,9 +56,12 @@
   ansible.builtin.file:
     path: /opt/keycloak/bin/
     mode: o+x
-- name: Start Keycloak
+- name: Reload Demon
   ansible.builtin.command:
-    cmd: systemctl start keycloak
+    cmd: systemctl daemon-reload
 - name: Enable Keycloak
   ansible.builtin.command:
     cmd: systemctl enable keycloak
+- name: Start Keycloak
+  ansible.builtin.command:
+    cmd: systemctl start keycloak

@@ -1,0 +1,15 @@
+- name: Update and upgrade apt packages
+  become: true
+  apt:
+    upgrade: yes
+    update_cache: yes
+- name: Install PostgreSQL
+  ansible.builtin.apt:
+    name: postgresql
+- name: Create Keycloak user and keycloakDB
+  become: true
+  become_user: postgres
+  shell: |
+    psql -c 'CREATE DATABASE keycloakDB;'
+    psql -c "CREATE USER keycloak WITH ENCRYPTED PASSWORD 'secure';"
+    psql -c "GRANT ALL PRIVILEGES ON DATABASE keycloakDB TO keycloak;"
