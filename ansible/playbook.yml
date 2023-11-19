@@ -8,6 +8,7 @@
     - setup
     - mongodb
     - backend
+    - nginx
     - keycloak-db
     - keycloak
   tasks:
