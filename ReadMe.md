@@ -23,8 +23,8 @@
 # ToDos
 
 ## Allgemein
-- [ ] Eigene Role für das vorbereiten des Servers zB.: `apt -y update` und `apt -y upgrade`
-  -  Wird aktuell in der keycloak-db ausgeführt
+- [x] ~~Eigene Role für das vorbereiten des Servers zB.: `apt -y update` und `apt -y upgrade`~~
+  -  ~~Wird aktuell in der keycloak-db ausgeführt~~
 - [ ]  Doku für nginx 
 - [ ]  Doku für mongoDB
 
@@ -36,7 +36,7 @@
   - [ ] main.yml
   - [ ] keycloak-db/main.yml
 - [ ] `start-dev` mit `start` Command ersetzten
-- [ ] Richtigen command für systemctlm Befehle verwenden
+- [ ] Richtigen command für systemctl Befehle verwenden
 - [ ] Mehr bedingte Ausführungen hinzufügen in der main.yml (zB. JDK nur installieren falls noch nicht vorhanden)
 
 

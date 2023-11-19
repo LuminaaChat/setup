@@ -5,6 +5,7 @@
   become_user: root
   gather_facts: false
   roles:
+    - setup
     - mongodb
     - backend
     - keycloak-db
