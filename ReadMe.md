@@ -4,20 +4,43 @@
 * Ansible [[2]](#2)
   * ggf. zur PATH-Variable hinzufügen; Konsolen output beachten
 
-# Ausführung
-TODO
+# Server einrichten
+
 ## Keycloak
-* Admin Username und Passwort verändern!
-* Erreichbar unter: http://localhost:8081/admin/master/console/
+* Admin Username und Passwort verändern! - siehe Keycloak ToDos
+
+## Allgemein
+* IPs der Hosts in der "hosts"-Datei anpassen
+* Ansible auf dem Server ausführen
+  * `ansible-playbook -i hosts playbook.yml`
+
+#  Nutzung
+
+## Keycloak
+* Erreichbar unter: https://luminaa.chat:8080/admin/master/console/
 
 
 # ToDos
 
-## Keycloak
-* Eigenen User mit Rolle erstellen im Client
-* Default Settings konfigurieren und einlesen
+## Allgemein
+- [ ] Eigene Role für das vorbereiten des Servers zB.: `apt -y update` und `apt -y upgrade`
+  -  Wird aktuell in der keycloak-db ausgeführt
+- [ ]  Doku für nginx 
+- [ ]  Doku für mongoDB
 
-## Resources
+## Keycloak (+DB)
+- [x] ~~Keycloak mit Postgres verbinden~~
+- [ ] Hart codierte Werte mit Variablen ersetzten
+  - [ ] keycloak.conf
+  - [ ] keycloak.service 
+  - [ ] main.yml
+  - [ ] keycloak-db/main.yml
+- [ ] `start-dev` mit `start` Command ersetzten
+- [ ] Richtigen command für systemctlm Befehle verwenden
+- [ ] Mehr bedingte Ausführungen hinzufügen in der main.yml (zB. JDK nur installieren falls noch nicht vorhanden)
+
+
+## Ressourcen
 <a id="1">[1]</a> 
 https://www.python.org/downloads
 <br>
